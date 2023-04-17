@@ -1,29 +1,27 @@
 # Introduction
 
-The Dropwizard example application was developed to, as its name implies, provide examples of some of the features
-present in Dropwizard.
+This app exists to show how to integrate Prefab with a Dropwizard application using Guice for Dependency Injection
 
 # Overview
 
-Included with this application is an example of the optional DB API module. The examples provided illustrate a few of
-the features available in [Hibernate](http://hibernate.org/), along with demonstrating how these are used from within
-Dropwizard.
+## Prefab Installation
 
-This database example is comprised of the following classes:
+The second commit in this repository shows the installation work. We can break it down as follows
 
-* The `PersonDAO` illustrates using the Data Access Object pattern with assisting of Hibernate.
+1. Add the dependencies in pom.xml
+2. Add the [Guice module](/src/main/java/com/example/helloworld/modules/PrefabModule.java). This currently initializes the client to LOCAL_ONLY mode.
+3. Install the Guice module in the [application class](/src/main/java/com/example/helloworld/HelloWorldApplication.java#L54)
+4. Add a [default config file](/src/main/resources/.prefab.default.config.yaml)
 
-* The `Person` illustrates mapping of Java classes to database tables with assisting of JPA annotations.
+## Prefab Usage
 
-* All the JPQL statements for use in the `PersonDAO` are located in the `Person` class.
+The next commits adds some example use cases
 
-* `migrations.xml` illustrates the usage of `dropwizard-migrations` which can create your database prior to running
-your application for the first time.
+1. [Home Resource](/src/main/java/com/example/helloworld/resources/HomeResource.java) and its View Counterpart illustrate fetching config values. The view adds links that require login to test protected resource
+2. [Protected Resource](/src/main/java/com/example/helloworld/resources/ProtectedResource.java) has some authorization required endpoints that will allow us to demonstrate PrefabContext usage
+3. Add a [RequestFilter](/src/main/java/com/example/helloworld/filter/PrefabContextAddingRequestFilter.java) to create a Prefab context for a logged in user and save it to a ThreadLocal 
+4. Add a [Response filter](/src/main/java/com/example/helloworld/filter/PrefabContexClearingResponseFilter.java) to clear the Prefab context ThreadLocal so that when the thread is used for a new request, it starts with a clean slate
 
-* The `PersonResource` and `PeopleResource` are the REST resource which use the PersonDAO to retrieve data from the database, note the injection
-of the PersonDAO in their constructors.
-
-As with all the modules the db example is wired up in the `initialize` function of the `HelloWorldApplication`.
 
 # Running The Application
 
@@ -43,3 +41,7 @@ To test the example application run the following commands.
 
 	http://localhost:8080/hello-world
 
+
+## Credits
+
+This example is based on https://github.com/Appdynamics/dropwizard-sample-app
