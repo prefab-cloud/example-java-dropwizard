@@ -1,6 +1,8 @@
 package com.example.helloworld.resources;
 
+import cloud.prefab.client.FeatureFlagClient;
 import com.example.helloworld.core.User;
+import com.google.inject.Inject;
 import io.dropwizard.auth.Auth;
 
 import javax.annotation.security.PermitAll;
@@ -16,14 +18,20 @@ import javax.ws.rs.core.SecurityContext;
  */
 
 @Path("/protected")
-@RolesAllowed("BASIC_GUY")
+@RolesAllowed("BASIC")
 public final class ProtectedClassResource {
 
+    @Inject FeatureFlagClient featureFlagClient;
     @GET
     @PermitAll
     @Path("guest")
     public String showSecret(@Auth User user) {
-        return String.format("Hey there, %s. You know the secret! %d", user.getName(), user.getId());
+
+        return String.format("Hey there, %s. You know the secret! %d. 'basic-feature' is %s",
+            user.getName(),
+            user.getId(),
+            featureFlagClient.featureIsOn("features.basic-flag")
+        );
     }
 
     /* Access to this method is authorized by the class level annotation */
