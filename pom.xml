@@ -85,6 +85,16 @@
             <version>5.7.1</version>
         </dependency>
         <dependency>
+            <groupId>cloud.prefab</groupId>
+            <artifactId>client</artifactId>
+            <version>0.3.8pre1</version>
+        </dependency>
+        <dependency>
+            <groupId>cloud.prefab</groupId>
+            <artifactId>logback-listener</artifactId>
+            <version>0.3.8pre1</version>
+        </dependency>
+        <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-testing</artifactId>
             <scope>test</scope>

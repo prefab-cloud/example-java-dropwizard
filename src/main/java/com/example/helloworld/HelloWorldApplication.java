@@ -3,8 +3,10 @@ package com.example.helloworld;
 import com.example.helloworld.auth.ExampleAuthenticator;
 import com.example.helloworld.auth.ExampleAuthorizer;
 import com.example.helloworld.cli.RenderCommand;
+
 import com.example.helloworld.core.User;
 
+import com.example.helloworld.modules.PrefabModule;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
@@ -49,7 +51,7 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
         return configuration.getViewRendererConfiguration();
       }
     });
-    bootstrap.addBundle(new GuiceBundle.Builder().enableAutoConfig().build());
+    bootstrap.addBundle(new GuiceBundle.Builder().enableAutoConfig().modules(new PrefabModule()).build());
   }
 
   @Override

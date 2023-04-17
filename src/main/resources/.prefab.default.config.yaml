@@ -1,0 +1,5 @@
+sample:
+  string: "Hello World from Default Config"
+  long: 1234567890
+
+features.basic-flag: { "feature_flag": "true", value: true }
