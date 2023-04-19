@@ -31,9 +31,8 @@ public class PrefabContextAddingRequestFilter implements ContainerRequestFilter 
             if (principal instanceof User) {
                 User user = (User) principal;
                 LOGGER.info("will add pf context for {}", user);
-                configClient.addContext(PrefabContext.newBuilder("User")
-                        .withKey(String.valueOf(user.getId()))
-                        .set("name", user.getName())
+                configClient.getContextStore().addContext(PrefabContext.newBuilder("User")
+                        .put("name", user.getName())
                         .build());
             }
 

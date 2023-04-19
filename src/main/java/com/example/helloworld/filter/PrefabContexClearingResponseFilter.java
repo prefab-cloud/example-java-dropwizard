@@ -21,7 +21,7 @@ public class PrefabContexClearingResponseFilter implements ContainerResponseFilt
 
     @Override
     public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext containerResponseContext) throws IOException {
-        configClient.clearContexts();
+        configClient.getContextStore().clearContexts();
         LOGGER.info("Cleared context");
     }
 }
